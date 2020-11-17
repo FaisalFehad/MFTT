@@ -1,5 +1,6 @@
 exports.top_3_words = (s) => {
   const result = [];
+  if (!s) return result; // return empty when no text provided/ an empty string
   // spacial characters removed, lowercased array of the input string
   const splittedString = s.toLowerCase().replace(/'\B|[^a-z'? ]/g, '').split(' ');
   const wordsCount = {}; // keeps track of repeated words

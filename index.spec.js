@@ -5,9 +5,11 @@ describe('top_3_words', () => {
   it('returns an empty Array when passed empty string', () => {
     expect(top_3_words('')).to.be.an('Array');
   });
-  it('returns an empty array with a nested empty string', () => {
-    expect(top_3_words('')).to.be.length(1);
-    expect(top_3_words('')).to.eql(['']);
+  it('returns an empty array when passed nothing or an empty string', () => {
+    expect(top_3_words('')).to.be.length(0);
+    expect(top_3_words('')).to.eql([]);
+    expect(top_3_words()).to.be.length(0);
+    expect(top_3_words()).to.eql([]);
   });
   it('returns an array with a nested string when passed single worded string', () => {
     expect(top_3_words('hi')).to.be.length(1);
