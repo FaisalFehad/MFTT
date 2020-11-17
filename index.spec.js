@@ -2,9 +2,6 @@ const { expect } = require('chai');
 const { top_3_words } = require('./index');
 
 describe('top_3_words', () => {
-  it('returns an empty Array when passed empty string', () => {
-    expect(top_3_words('')).to.be.an('Array');
-  });
   it('returns an empty array when passed nothing or an empty string', () => {
     expect(top_3_words('')).to.be.length(0);
     expect(top_3_words('')).to.eql([]);
