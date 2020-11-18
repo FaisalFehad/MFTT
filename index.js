@@ -1,6 +1,6 @@
 exports.top_3_words = (s) => {
   const result = [];
-  if (!s) return result; // return empty when no text provided/ an empty string
+  if (!s) return result; // stop before starting when no text provided/ an empty string
   // spacial characters removed, lowercased array of the input string
   const splittedString = s.toLowerCase().replace(/'\B|[^a-z'? ]/g, '').split(' ').filter((w) => w.length);
   const wordsCount = {}; // keeps track of repeated words
@@ -26,14 +26,13 @@ exports.top_3_words = (s) => {
     }
   });
 
-  // pushes repeated words to results
+  // Using the short list of topWordRepeats, it pushes words into result arr
+  // Flattens numWord[num] as many words could be repeated the same number of times
+  // Make that no 2 results are repeated
   topWordRepeats.forEach((num) => {
-    if (numWord[num].length === 1 && result.length < 3) result.push(numWord[num][0]);
-    else if (result.length < 3) {
-      [numWord[num].flat(numWord[num].length)][0].forEach((str) => {
-        if (str.length !== 0 && !result.includes(str)) result.push(str);
-      });
-    }
+    numWord[num].flat(Infinity).forEach((w) => {
+      if (!result.includes(w)) result.push(w);
+    });
   });
 
   return result;
