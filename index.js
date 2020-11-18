@@ -4,7 +4,7 @@ exports.top_3_words = (s) => {
   // spacial characters removed, lowercased array of the input string
   const splittedString = s.toLowerCase().replace(/'\B|[^a-z'? ]/g, '').split(' ').filter((w) => w.length);
   const wordsCount = {}; // keeps track of repeated words
-  const numWord = {};
+  const numWord = {}; // allows for different word is repeated by the same amount as others
 
   // keep key value pairs {word : mentions}
   splittedString.forEach((word) => {
@@ -20,19 +20,22 @@ exports.top_3_words = (s) => {
   // only iterate through the top 3 words
   Object.entries(wordsCount).forEach(([key, value]) => {
     if (topWordRepeats.includes(value)) {
-      const arr = Array(1).fill(key);
-      if (numWord[value]) numWord[value] = [numWord[value], arr];
-      else numWord[value] = arr;
+      if (numWord[value]) numWord[value] = [numWord[value], key];
+      else numWord[value] = key;
     }
   });
 
   // Using the short list of topWordRepeats, it pushes words into result arr
-  // Flattens numWord[num] as many words could be repeated the same number of times
-  // Make that no 2 results are repeated
+  // Flattens numWord[num] if it has nested arrays
+  // Make sure that no 2 results are repeated
   topWordRepeats.forEach((num) => {
-    numWord[num].flat(Infinity).forEach((w) => {
-      if (!result.includes(w)) result.push(w);
-    });
+    const w = numWord[num]; // could be an array when multiple words are repeated by the same amount
+    if (Array.isArray(w)) {
+      w.flat(Infinity).forEach((word) => {
+        if (result.length < 3 && !result.includes(word)) result.push(word);
+        return result; // to end sooner
+      });
+    } else result.push(w);
   });
 
   return result;
