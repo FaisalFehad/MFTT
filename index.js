@@ -1,15 +1,14 @@
 exports.top_3_words = (s) => {
   const result = [];
-  if (!s) return result; // stop before starting when no text provided/ an empty string
+  if (typeof (s) === 'object' || !s) return result; // stop before starting when no text provided/ an empty string
   // spacial characters removed, lowercased array of the input string, empty strings are removed
   const splittedString = s.toLowerCase().replace(/'\B|[^a-z'? ]/g, '').split(' ').filter((w) => w.length);
-  const wordsCount = {}; // keeps track of repeated words
   const numWord = {}; // allows for different word is repeated by the same amount as others
-
   // keep key value pairs {word : mentions}
-  splittedString.forEach((word) => {
-    wordsCount[word] = (wordsCount[word] + 1) || 1;
-  });
+  const wordsCount = splittedString.reduce((a, word) => {
+    a[word] = (a[word] + 1) || 1;
+    return a;
+  }, {});
 
   // count of the top 3 repeated words
   const topWordRepeats = Object.values(wordsCount).sort().reverse().splice(0, 3);

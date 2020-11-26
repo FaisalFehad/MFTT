@@ -46,4 +46,6 @@ describe('top_3_words', () => {
     expect(top_3_words(input3)).to.eql(['x', 'q']);
     expect(top_3_words(input4)).to.eql(['x', 'y', 'z']);
   });
+  it('should handle an array as negative scenario', () => { const input = ['foo']; expect(top_3_words(input)).to.eql([]); });
+  it('should handle an object as negative scenario', () => { const input = {}; expect(top_3_words(input)).to.eql([]); });
 });
